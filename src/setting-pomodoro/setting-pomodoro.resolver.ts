@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SettingPomodoroService } from './setting-pomodoro.service';
 import { SettingPomodoro } from './entities/setting-pomodoro.entity';
 import { CreateSettingPomodoroInput } from './dto/create-setting-pomodoro.input';
