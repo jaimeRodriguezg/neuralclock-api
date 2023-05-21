@@ -5,8 +5,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    image: chivato-repository
-    container_name: ChivatoAPP
+    image: neuralclock-repository
+    container_name: NeuralClockAPP
     restart: always
     ports:
       - "80:4000"

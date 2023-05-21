@@ -9,13 +9,13 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    container_name: db_chivato_container
+    container_name: db_neuralclock_container
     volumes:
       - ./postgres:/var/lib/postgresql/data
     networks:
-      - chivato-network
+      - neuralclock-network
   pgadmin:
-    container_name: pgadmin4_chivato_container
+    container_name: pgadmin4_neuralclock_container
     image: dpage/pgadmin4
     restart: always
     environment:
@@ -25,20 +25,20 @@ services:
     ports:
       - "${PG_EXTERNAL_PORT}:${PG_INTERNAL_PORT}"
     networks:
-      - chivato-network
-  chivatoapp:
+      - neuralclock-network
+  neuralclockapp:
     depends_on:
       - db
     build: 
       context: .
       dockerfile: Dockerfile
-    image: chivato-nest-graphql
-    container_name: ChivatoAPPdev
+    image: neuralclock-nest-graphql
+    container_name: neuralclockAPPdev
     restart: always # reiniciar el contenedor si se detiene
     ports:
       - "${API_PORT}:${API_PORT}"
     networks:
-      - chivato-network
+      - neuralclock-network
 
     environment:
       STATE: ${STATE}
@@ -61,6 +61,6 @@ services:
       AWS_S3_BUCKET_NAME: ${AWS_S3_BUCKET_NAME}
      
 networks:
-  chivato-network:
+  neuralclock-network:
     driver: bridge
   
