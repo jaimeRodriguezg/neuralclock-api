@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14.4
+    restart: always
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    container_name: db_chivato_container
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - chivato-network
+  pgadmin:
+    container_name: pgadmin4_chivato_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${USER_PG_ADMIN}
+      PGADMIN_DEFAULT_PASSWORD: ${PASSWORD_PG_ADMIN}
+      PGADMIN_DEFAULT_SERVER: db 
+    ports:
+      - "${PG_EXTERNAL_PORT}:${PG_INTERNAL_PORT}"
+    networks:
+      - chivato-network
+  chivatoapp:
+    depends_on:
+      - db
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: chivato-nest-graphql
+    container_name: ChivatoAPPdev
+    restart: always # reiniciar el contenedor si se detiene
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    networks:
+      - chivato-network
+
+    environment:
+      STATE: ${STATE}
+      USER_PG_ADMIN: ${USER_PG_ADMIN}
+      PASSWORD_PG_ADMIN: ${PASSWORD_PG_ADMIN}
+      PG_INTERNAL_PORT: pgadmin
+      PG_EXTERNAL_PORT: ${PG_EXTERNAL_PORT}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      LOGTAIL_SOURCE_TOKEN: ${LOGTAIL_SOURCE_TOKEN}
+      AUTH0_ISSUER_URL: ${AUTH0_ISSUER_URL}
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      API_PORT: ${API_PORT}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_BUCKET_NAME: ${AWS_S3_BUCKET_NAME}
+     
+networks:
+  chivato-network:
+    driver: bridge
+  

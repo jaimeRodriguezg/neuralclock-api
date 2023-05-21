@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  chivatoapp-prod:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: chivato-repository
+    container_name: ChivatoAPP
+    restart: always
+    ports:
+      - "80:4000"
+
+  

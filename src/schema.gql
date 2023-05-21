@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type SettingPomodoro {
+  id: String!
+  email: String!
+  pomodoro: Int!
+  shortTimer: Int!
+  longTimer: Int!
+  intervals: Int!
+}
+
+type Query {
+  settingsPomodoro: [SettingPomodoro!]!
+  settingPomodoro(id: String!): SettingPomodoro!
+}
+
+type Mutation {
+  createSettingPomodoro(createSettingPomodoroInput: CreateSettingPomodoroInput!): SettingPomodoro!
+  updateSettingPomodoro(updateSettingPomodoroInput: UpdateSettingPomodoroInput!): SettingPomodoro!
+}
+
+input CreateSettingPomodoroInput {
+  id: String!
+  email: String!
+  pomodoro: Int!
+  shortTimer: Int!
+  longTimer: Int!
+  intervals: Int!
+}
+
+input UpdateSettingPomodoroInput {
+  id: String!
+  email: String
+  pomodoro: Int
+  shortTimer: Int
+  longTimer: Int
+  intervals: Int
+}
