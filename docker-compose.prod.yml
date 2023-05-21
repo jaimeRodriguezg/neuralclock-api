@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  chivatoapp-prod:
+  neuralclock-prod:
     build: 
       context: .
       dockerfile: Dockerfile
